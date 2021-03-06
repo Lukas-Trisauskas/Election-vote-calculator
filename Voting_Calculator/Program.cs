@@ -7,7 +7,7 @@ namespace Voting_Calculator
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Test Branch");
+            Console.WriteLine("Beta Branch");
         }
     }
 }
