@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace Voting_Calculator
 {
     class Program
     {
+        private static List<Party> parties = new List<Party>();
+
         static void Main(string[] args)
         {
             Console.WriteLine("Development Branch");
@@ -13,7 +16,21 @@ namespace Voting_Calculator
 
             string data = ReadFile();
 
-            Console.WriteLine(data);
+            //Console.WriteLine(data);
+
+            String[] lines = data.Split(Char.Parse("\n"));
+
+            // For each line create and add a new Party to the list
+            for (int i = 3; i < lines.Length; i++)
+            {
+                parties.Add(new Party(lines[i]));
+            }
+
+            // Just testing and displaying all parties
+            foreach (Party party in parties)
+            {
+                Console.WriteLine($"{party.Name}:   Votes: {party.Votes}    Seats: {string.Join(", ", party.Seats)}");
+            }
         }
         static string ReadFile()
         {
