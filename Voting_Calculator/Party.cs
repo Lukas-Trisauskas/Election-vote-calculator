@@ -16,7 +16,7 @@ namespace Voting_Calculator
             get { return _name; }
         }
 
-        public int Votes 
+        public int TotalVotes 
         {
             get { return _votes; }
             set { _votes = value; }
@@ -47,12 +47,16 @@ namespace Voting_Calculator
                 // Set the name and number of votes from the array
                 _name = substrings[0];
                 _votes = Int32.Parse(substrings[1]);
+                
 
                 // For every string after the first two strings in the array add to the seats array
                 for (int i = 2; i < substrings.Length; i++)
                 {
                     _seats.Add(substrings[i]);
                 }
+
+                // Counts how many elements are inside _seats list
+                _totalSeats = _seats.Count;
             }
             catch (Exception exception)
             {
