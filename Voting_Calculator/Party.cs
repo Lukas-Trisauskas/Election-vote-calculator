@@ -7,9 +7,10 @@ namespace Voting_Calculator
     class Party
     {
         private string _name;
-        private int _votes;
+        private int _totalVotes;
         private int _totalSeats = 0;
         private List<String> _seats = new List<String>();
+        private int _quotient = 0;
 
         public string Name 
         { 
@@ -18,8 +19,8 @@ namespace Voting_Calculator
 
         public int TotalVotes 
         {
-            get { return _votes; }
-            set { _votes = value; }
+            get { return _totalVotes; }
+            set { _totalVotes = value; }
         }
 
         public int TotalSeats
@@ -32,7 +33,11 @@ namespace Voting_Calculator
         {
             get { return _seats; }
         }
-
+        public int Quotient
+        {
+            get { return _quotient; }
+            set { _quotient = value; }
+        }
 
         public Party(string data)
         {
@@ -46,8 +51,7 @@ namespace Voting_Calculator
 
                 // Set the name and number of votes from the array
                 _name = substrings[0];
-                _votes = Int32.Parse(substrings[1]);
-                
+                _totalVotes = Int32.Parse(substrings[1]);
 
                 // For every string after the first two strings in the array add to the seats array
                 for (int i = 2; i < substrings.Length; i++)
