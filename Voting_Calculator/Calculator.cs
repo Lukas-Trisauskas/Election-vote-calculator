@@ -28,7 +28,15 @@ namespace Voting_Calculator
                     {
                         party.Quotient = party.TotalVotes / (allocatedSeats + 1);
                         Console.WriteLine($"Party: {party.Name} | Votes: {party.TotalVotes} | Quotient: {party.Quotient}");
-                    }    
+
+                        /*
+                         * TODO:
+                         * Need to find maximum quotient
+                         * Assigne a seat to the party with the highest quotient
+                        */
+
+
+                    }
                 }
                 _round += 1;
                 allocatedSeats++;
