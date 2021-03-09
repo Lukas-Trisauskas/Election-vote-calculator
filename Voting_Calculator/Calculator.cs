@@ -12,21 +12,26 @@ namespace Voting_Calculator
 
         public Calculator(IEnumerable<Object> partyList)
         {
+            // At the start the initial seats are set to 0 for all parties
 
-            int seatsAllocated = 0;
-            while (seatsAllocated < 5)
+            int allocatedSeats = 0;
+            while (allocatedSeats < 5)
             {
                 Console.WriteLine($"Round: {_round}");
+
+                // Loops through each list object
                 foreach (Party party in partyList)
                 {
+                    // Checks if TotalSeats can be divided by the total amount of seats that can be allocated 5
+                    // As TotalSeats is divided by 1, 2, 3 upto the total maximum seats
                     if (party.TotalSeats >= _round)
                     {
-                        party.Quotient = party.TotalVotes / (seatsAllocated + 1);
+                        party.Quotient = party.TotalVotes / (allocatedSeats + 1);
                         Console.WriteLine($"Party: {party.Name} | Votes: {party.TotalVotes} | Quotient: {party.Quotient}");
                     }    
                 }
                 _round += 1;
-                seatsAllocated++;
+                allocatedSeats++;
             }
 
             /*
