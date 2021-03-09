@@ -10,22 +10,24 @@ namespace Voting_Calculator
 
         static void Main(string[] args)
         {
-            /*
-             * Creates a new instance of a class, which takse 1 arg
-             * partyList is sent to the main class method [Calculator()]
-            */
-            Calculator newElection = new Calculator(partyList);
 
-        }
-        static void CreateParty()
-        {
             // Calls the function and stores contents of the file inside a new variable
             string data = ReadFile();
 
+            CreateParty(data);
 
+            /*
+              * Creates a new instance of a class, which takse 1 arg
+              * partyList is sent to the main class method [Calculator()]
+             */
+            Calculator newElection = new Calculator(partyList);
+
+        }
+        static void CreateParty(string file)
+        {
+           
             // Splits each line as individual string and stores it in an array
-            String[] splitLines = data.Split(Char.Parse("\n"));
-
+            String[] splitLines = file.Split(Char.Parse("\n"));
 
             /*
              * [i = 3] means that it starts from the third line
