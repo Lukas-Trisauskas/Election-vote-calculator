@@ -6,44 +6,49 @@ namespace Voting_Calculator
 {
     class Party
     {
+        // Properties
         private string _name;
         private int _totalVotes;
         private List<String> _mepsAvailable = new List<String>();
-        private List<String> _mepsGained = new List<String>();
+        private List<String> _mepsEarned = new List<String>();
+        private int _mepsTotal = 0;
 
+        // Property methods
         public string Name 
         { 
             get { return _name; }
             private set { _name = value; }
         }
-
         public int TotalVotes 
         {
             get { return _totalVotes; }
             private set { _totalVotes = value; }
         }
-
-        public List<String> MepsAvailable
+        public List<String> MEPsAvailable
         {
             get { return _mepsAvailable; }
             private set { _mepsAvailable = value; }
         }
-
-        public List<String> MepsGained
+        public List<String> MEPsEarned
         {
-            get { return _mepsGained; }
-            private set { _mepsGained = value; }
+            get { return _mepsEarned; }
+            private set { _mepsEarned = value; }
         }
-
+        public int  MEPsTotal
+        {
+            get { return _mepsTotal; }
+            private set { _mepsTotal = value; }
+        }
+        // Constructor
         public Party(string data)
         {
-
+            // Error handling
             try
             {
-                // Remove semi colon from the end of the line
+                // Remove [;] in every line
                 data = data.Replace(Char.Parse(";"), Char.Parse(" "));
 
-                // Split the data at every comma into seperate strings and put into an array
+                // Seperates each string data after every comma and stores that data into an array.
                 String[] substrings = data.Split(Char.Parse(","));
 
                 // Set the name and number of votes from the array
@@ -53,21 +58,27 @@ namespace Voting_Calculator
                 // For every string after the first two strings in the array add to the seats array
                 for (int i = 2; i < substrings.Length; i++)
                 {
-                    MepsAvailable.Add(substrings[i]);
+                    MEPsAvailable.Add(substrings[i]);
                 }
             }
+            // Takes the list of MEPs earned and counts the elements inside, giving us the final result
             catch (Exception exception)
             {
                 Console.WriteLine($" Unable to interpret data for {data} \nException occured: {exception.Message}\n");
             }
         }
 
+        /*
+         * Appoints a MEP to party with the most votes to a new list _mepsEarned
+         * Removes the MEP that was appointed from _mepsAvailable
+         * The next MEP will be at index 0
+         */
         public void AppointMep()
         {
-            if (MepsAvailable.Count > 0)
+            if (MEPsAvailable.Count > 0)
             {
-                MepsGained.Add(MepsAvailable[0]);
-                MepsAvailable.RemoveAt(0);
+                MEPsEarned.Add(MEPsAvailable[0]);
+                MEPsAvailable.RemoveAt(0);
             }
         }
     }
