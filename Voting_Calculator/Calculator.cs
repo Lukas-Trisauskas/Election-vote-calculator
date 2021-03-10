@@ -9,6 +9,12 @@ namespace Voting_Calculator
     {
         // Properties
         private int _round = 1;
+        private string _results = "Results have not been caculated, use Caculate() method first!";
+
+        public string Results
+        {
+            get { return _results; }
+        }
 
         public Calculator(IEnumerable<Object> partyList)
         {
@@ -42,6 +48,7 @@ namespace Voting_Calculator
                 allocatedSeats++;
             }
 
+
             /*
              * [D'Hondt Method]
              * V = is total number of votes that party received
@@ -54,6 +61,34 @@ namespace Voting_Calculator
            */
 
 
+        }
+
+        public void Calculate(List<Party> parties, int seatsToBeAllocated, int totalVotes)
+        {
+            List<int> votes = new List<int>();
+            List<int> roundsWon = new List<int>();
+
+            foreach (Party party in parties)
+            {
+                votes.Add(party.TotalVotes);
+                roundsWon.Add(0);
+            }
+
+
+            int highestVoteCount = 0;
+
+            for (int round = 1; round == seatsToBeAllocated; round++)
+            {
+                
+                highestVoteCount = votes.Max();
+
+                int highestVoteIndex = votes.IndexOf(highestVoteCount);
+                votes[highestVoteIndex] /= round;
+
+
+
+
+            }
         }
     }
 }

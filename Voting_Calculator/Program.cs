@@ -6,42 +6,56 @@ namespace Voting_Calculator
 {
     class Program
     {
-        private static List<Party> partyList = new List<Party>();
 
         static void Main(string[] args)
         {
-
             // Calls the function and stores contents of the file inside a new variable
-            string data = ReadFile();
+            String[] data = ReadFile();
+            List<Party> parties = CreatePartyList(data);
 
-            CreateParty(data);
+            try
+            {
+                int seatsToBeAllocated = Int32.Parse(data[1]);
+            }
+            catch
+            {
+                Console.WriteLine("Unable to interpret number of seats from file, please make sure it is an integer on line 2");
+            }
+
+            try
+            {
+                int totalVotes = Int32.Parse(data[2]);
+            }
+            catch
+            {
+                Console.WriteLine("Unable to interpret number of votes from file, please make sure it is an integer on line 3");
+            }
 
             /*
               * Creates a new instance of a class, which takse 1 arg
               * partyList is sent to the main class method [Calculator()]
              */
-            Calculator newElection = new Calculator(partyList);
+            Calculator newElection = new Calculator(parties);
 
         }
-        static void CreateParty(string file)
+        static List<Party> CreatePartyList(String[] data)
         {
-           
-            // Splits each line as individual string and stores it in an array
-            String[] splitLines = file.Split(Char.Parse("\n"));
-
             /*
              * [i = 3] means that it starts from the third line
              * Each individual line is passed to main class method [Party()], which will seperate individual data inside that line
              * E.g. Name, Votes, Seats etc.
              * The seperated data is then added inside list object List<Party>
             */
-            for (int i = 3; i < splitLines.Length; i++)
+            List<Party> partyList = new List<Party>();
+
+            for (int i = 3; i < data.Length; i++)
             {
-                partyList.Add(new Party(splitLines[i]));
+                partyList.Add(new Party(data[i]));
             }
 
+            return partyList;
         }
-        static string ReadFile()
+        static String[] ReadFile()
         {
             // Returns current working directory
             string currentDirectory = Directory.GetCurrentDirectory();
@@ -58,7 +72,10 @@ namespace Voting_Calculator
             // Takes file path as an argument and reads the text file
             string text = File.ReadAllText(filePath);
 
-            return text;
+            // Splits each line as individual string and stores it in an array
+            String[] fileLines = text.Split(Char.Parse("\n"));
+
+            return fileLines;
         }
     }
 }
