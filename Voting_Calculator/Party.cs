@@ -7,11 +7,10 @@ namespace Voting_Calculator
     class Party
     {
         private string _name;
-        private int _totalVotes;
-        private int _totalSeats = 0;
-        private List<String> _seats = new List<String>();
-        private int _quotient = 0;
-
+        private int _votes;
+        private List<String> _mepsAvailable = new List<String>();
+        private List<String> _meps = new List<String>();
+        private int _mepsTotal = 0;
         public string Name 
         { 
             get { return _name; }
@@ -19,28 +18,26 @@ namespace Voting_Calculator
 
         public int TotalVotes 
         {
-            get { return _totalVotes; }
-            set { _totalVotes = value; }
+            get { return _votes; }
+            set { _votes = value; }
         }
-
-        public int TotalSeats
+        public List<String> MepsAvailable
         {
-            get { return _totalSeats; }
-            set { _totalSeats = value; }
+            get { return _mepsAvailable; }
         }
-
-        public List<String> Seats 
+        public List<String> MepsGained
         {
-            get { return _seats; }
+            get { return _meps; }
+            set { _meps = value; }
         }
-        public int Quotient
+        public int MepsTotal 
         {
-            get { return _quotient; }
-            set { _quotient = value; }
+            get { return _mepsTotal; }
+            set { _mepsTotal = value; }
         }
-
         public Party(string data)
         {
+
             try
             {
                 // Remove semi colon from the end of the line
@@ -51,22 +48,32 @@ namespace Voting_Calculator
 
                 // Set the name and number of votes from the array
                 _name = substrings[0];
-                _totalVotes = Int32.Parse(substrings[1]);
+                _votes = Int32.Parse(substrings[1]);
 
                 // For every string after the first two strings in the array add to the seats array
                 for (int i = 2; i < substrings.Length; i++)
                 {
-                    _seats.Add(substrings[i]);
+                    _mepsAvailable.Add(substrings[i]);
                 }
 
-                // Counts how many elements are inside _seats list
-                _totalSeats = _seats.Count;
+                // Counts how many MEPs partie has won
+                _mepsTotal = _meps.Count;
+
             }
             catch (Exception exception)
             {
                 Console.WriteLine($" Unable to interpret data for {data} \nException occured: {exception.Message}\n");
             }
-            
+        }
+        public string AppointMep()
+        {
+            if (_mepsAvailable.Count > 0)
+            {
+                _meps.Add(_mepsAvailable[0]);
+                _mepsAvailable.RemoveAt(0);
+            }
+            string mep = string.Join(",", _meps);
+            return mep;
         }
     }
 }
