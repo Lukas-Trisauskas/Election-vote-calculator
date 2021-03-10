@@ -9,41 +9,52 @@ namespace Voting_Calculator
 
         static void Main(string[] args)
         {
+
+            // Returns current working directory
             string currentDirectory = Directory.GetCurrentDirectory();
+
+            /*
+             * Combines two strings into a single path, currentDirectory + filename
+             * Each [..\] means that it moves backup 1 directory from \..\bin\Debug\netcoreapp2.0\ 
+             */
             string path = Path.Combine(currentDirectory, @"..\..\..\..\");
             string fileName = "Assessment1Data.txt";
 
-            FileReader data = new FileReader(path, fileName);
-            // Calls the function and stores contents of the file inside a new variable
-            /////String[] data = ReadFile();
-            List<Party> parties = CreatePartyList(data.Lines);
-            string electionName;
-            int seatsToBeAllocated;
 
-          
-            seatsToBeAllocated = Int32.Parse(data.Lines[1]);
+            FileReader data = new FileReader(path, fileName);
+
+
+            // Calls the function and stores contents of the file inside a new variable
+            List<Party> partyList = ExtractPartyList(data.Lines);
+            string electionName;
+            int seatsToAllocate;
+
+            // Retrieves the contents of the second line, which is the maximum amount of MEPs that can be appointed
+            seatsToAllocate = Int32.Parse(data.Lines[1]);
+
+            // Retrievs the concents of the first line, which is the election name.
             electionName = data.Lines[0];
-            //test coment to see is i can use the repistory - Barney
-            
-           
+
+
+
             /*
-              * Creates a new instance of a class, which takse 1 arg
-              * partyList is sent to the main class method [Calculator()]
+             * Creates a new instance of a the clas Calculator
+             * The constructor Calculator() takes three arguments, election name, partyList and seatsToAllocate
              */
-            Calculator newElection = new Calculator(electionName, parties, seatsToBeAllocated);
+
+            Calculator newElection = new Calculator(electionName, partyList, seatsToAllocate);
+
 
             newElection.Calculate();
-            
             Console.WriteLine(newElection.Results);
         }
 
-        static List<Party> CreatePartyList(String[] data)
+        static List<Party> ExtractPartyList(String[] data)
         {
             /*
-             * [i = 3] means that it starts from the third line
-             * Each individual line is passed to main class method [Party()], which will seperate individual data inside that line
-             * E.g. Name, Votes, Seats etc.
-             * The seperated data is then added inside list object List<Party>
+             * [i] denotes the start of the line
+             * Each line is passed to class the constructor Party(); data inside each line is seperated
+             * The seperated data is then added inside a list object List<Party>; this generates a list of objects/instance of Party class for all parties
             */
             List<Party> partyList = new List<Party>();
 
@@ -51,31 +62,7 @@ namespace Voting_Calculator
             {
                 partyList.Add(new Party(data[i]));
             }
-
             return partyList;
-        }
-
-        static String[] ReadFile()
-        {
-            // Returns current working directory
-            string currentDirectory = Directory.GetCurrentDirectory();
-
-            /*
-             * Combines two strings into a single path, currentDirectory + filename
-             * Each [..\] means that it moves backup 1 directory from \..\bin\Debug\netcoreapp2.0\
-            */
-            string path = Path.Combine(currentDirectory, @"..\..\..\..\Assessment1Data.txt");
-
-            // Returns actual path for the file
-            string filePath = Path.GetFullPath(path);
-
-            // Takes file path as an argument and reads the text file
-            string text = File.ReadAllText(filePath);
-
-            // Splits each line as individual string and stores it in an array
-            String[] fileLines = text.Split(Char.Parse("\n"));
-
-            return fileLines;
         }
     }
 }
