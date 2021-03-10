@@ -9,15 +9,20 @@ namespace Voting_Calculator
 
         static void Main(string[] args)
         {
+            string currentDirectory = Directory.GetCurrentDirectory();
+            string path = Path.Combine(currentDirectory, @"..\..\..\..\");
+            string fileName = "Assessment1Data.txt";
+
+            FileReader data = new FileReader(path, fileName);
             // Calls the function and stores contents of the file inside a new variable
-            String[] data = ReadFile();
-            List<Party> parties = CreatePartyList(data);
+            /////String[] data = ReadFile();
+            List<Party> parties = CreatePartyList(data.Lines);
             string electionName;
             int seatsToBeAllocated;
 
           
-            seatsToBeAllocated = Int32.Parse(data[1]);
-            electionName = data[0];
+            seatsToBeAllocated = Int32.Parse(data.Lines[1]);
+            electionName = data.Lines[0];
             
            
             /*
