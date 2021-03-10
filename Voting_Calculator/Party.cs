@@ -7,34 +7,34 @@ namespace Voting_Calculator
     class Party
     {
         private string _name;
-        private int _votes;
+        private int _totalVotes;
         private List<String> _mepsAvailable = new List<String>();
-        private List<String> _meps = new List<String>();
-        private int _mepsTotal = 0;
+        private List<String> _mepsGained = new List<String>();
+
         public string Name 
         { 
             get { return _name; }
+            private set { _name = value; }
         }
 
         public int TotalVotes 
         {
-            get { return _votes; }
-            set { _votes = value; }
+            get { return _totalVotes; }
+            private set { _totalVotes = value; }
         }
+
         public List<String> MepsAvailable
         {
             get { return _mepsAvailable; }
+            private set { _mepsAvailable = value; }
         }
+
         public List<String> MepsGained
         {
-            get { return _meps; }
-            set { _meps = value; }
+            get { return _mepsGained; }
+            private set { _mepsGained = value; }
         }
-        public int MepsTotal 
-        {
-            get { return _mepsTotal; }
-            set { _mepsTotal = value; }
-        }
+
         public Party(string data)
         {
 
@@ -47,33 +47,28 @@ namespace Voting_Calculator
                 String[] substrings = data.Split(Char.Parse(","));
 
                 // Set the name and number of votes from the array
-                _name = substrings[0];
-                _votes = Int32.Parse(substrings[1]);
+                Name = substrings[0];
+                TotalVotes = Int32.Parse(substrings[1]);
 
                 // For every string after the first two strings in the array add to the seats array
                 for (int i = 2; i < substrings.Length; i++)
                 {
-                    _mepsAvailable.Add(substrings[i]);
+                    MepsAvailable.Add(substrings[i]);
                 }
-
-                // Counts how many MEPs partie has won
-                _mepsTotal = _meps.Count;
-
             }
             catch (Exception exception)
             {
                 Console.WriteLine($" Unable to interpret data for {data} \nException occured: {exception.Message}\n");
             }
         }
-        public string AppointMep()
+
+        public void AppointMep()
         {
-            if (_mepsAvailable.Count > 0)
+            if (MepsAvailable.Count > 0)
             {
-                _meps.Add(_mepsAvailable[0]);
-                _mepsAvailable.RemoveAt(0);
+                MepsGained.Add(MepsAvailable[0]);
+                MepsAvailable.RemoveAt(0);
             }
-            string mep = string.Join(",", _meps);
-            return mep;
         }
     }
 }

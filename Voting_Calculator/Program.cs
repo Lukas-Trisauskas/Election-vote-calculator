@@ -27,10 +27,10 @@ namespace Voting_Calculator
             Calculator newElection = new Calculator(electionName, parties, seatsToBeAllocated);
 
             newElection.Calculate();
-
+            
             Console.WriteLine(newElection.Results);
-
         }
+
         static List<Party> CreatePartyList(String[] data)
         {
             /*
@@ -48,6 +48,7 @@ namespace Voting_Calculator
 
             return partyList;
         }
+
         static String[] ReadFile()
         {
             // Returns current working directory

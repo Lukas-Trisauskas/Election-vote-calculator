@@ -18,12 +18,7 @@ namespace Voting_Calculator
         {
             get
             {
-                if (_results == null)
-                {
-                    return "Results have not been caculated, use Caculate() method first!";
-                }
-
-                return _results;
+                return _results ?? "Results have not been caculated, use Caculate() method first!";
             }
 
             private set { _results = value; }
@@ -66,13 +61,10 @@ namespace Voting_Calculator
                 roundsWon.Add(0);
             }
 
-
-            int highestVoteCount = 0;
-
             for (int round = 1; round < SeatsToBeAllocated + 1; round++)
             {
 
-                highestVoteCount = votes.Max();
+                int highestVoteCount = votes.Max();
                 
                 int highestVoteIndex = votes.IndexOf(highestVoteCount);
 
@@ -97,7 +89,7 @@ namespace Voting_Calculator
 
         private void AddResult(string line)
         {
-            _results = _results + line + "\n";
+            Results = _results + line + "\n";
         }
     }
 }
