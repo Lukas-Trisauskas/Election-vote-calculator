@@ -12,30 +12,23 @@ namespace Voting_Calculator
             // Calls the function and stores contents of the file inside a new variable
             String[] data = ReadFile();
             List<Party> parties = CreatePartyList(data);
+            string electionName;
+            int seatsToBeAllocated;
 
-            try
-            {
-                int seatsToBeAllocated = Int32.Parse(data[1]);
-            }
-            catch
-            {
-                Console.WriteLine("Unable to interpret number of seats from file, please make sure it is an integer on line 2");
-            }
-
-            try
-            {
-                int totalVotes = Int32.Parse(data[2]);
-            }
-            catch
-            {
-                Console.WriteLine("Unable to interpret number of votes from file, please make sure it is an integer on line 3");
-            }
-
+          
+            seatsToBeAllocated = Int32.Parse(data[1]);
+            electionName = data[0];
+            
+           
             /*
               * Creates a new instance of a class, which takse 1 arg
               * partyList is sent to the main class method [Calculator()]
              */
             Calculator newElection = new Calculator(parties);
+
+            newElection.Calculate(parties, seatsToBeAllocated, electionName);
+
+            Console.WriteLine(newElection.Results);
 
         }
         static List<Party> CreatePartyList(String[] data)
