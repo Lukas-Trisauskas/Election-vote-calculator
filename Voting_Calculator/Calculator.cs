@@ -7,65 +7,42 @@ namespace Voting_Calculator
 {
     class Calculator
     {
-        // Properties
-        private int _round = 1;
+        // Fields
+        private List<Party> _parties = new List<Party>();
         private string _results = "Results have not been caculated, use Caculate() method first!";
+        private string _electionName;
+        private int _seatsToBeAllocated;
 
+        // Properties
         public string Results
         {
             get { return _results; }
+            private set { _results = value; }
         }
 
-        public Calculator(IEnumerable<Object> partyList)
+        public string ElectionName
         {
-            // At the start the initial seats are set to 0 for all parties
+            get { return _electionName; }
+            private set { _electionName = value; }
+        }
 
-           // int allocatedSeats = 0;
-          //  while (allocatedSeats < 5)
-          //  {
-               // Console.WriteLine($"Round: {_round}");
+        private int SeatsToBeAllocated
+        {
+            get { return _seatsToBeAllocated; }
+            set { _seatsToBeAllocated = value; }
+        }
 
-                // Loops through each list object
-                foreach (Party party in partyList)
-                {
-                    // Checks if TotalSeats can be divided by the total amount of seats that can be allocated 5
-                    // As TotalSeats is divided by 1, 2, 3 upto the total maximum seats
-                    /*if (party.TotalSeats >= _round)
-                    {
-                        party.Quotient = party.TotalVotes / (allocatedSeats + 1);
-                        Console.WriteLine($"Party: {party.Name} | Votes: {party.TotalVotes} | Quotient: {party.Quotient}");
-
-                        /*
-                         * TODO:
-                         * Need to find maximum quotient
-                         * Assigne a seat to the party with the highest quotient
-                        */
+        private List<Party> Parties
+        {
+            get { return _parties; }
+            set { _parties = value; }
+        }
 
 
-                        // }
-                        // }
-                        // _round += 1;
-                        //allocatedSeats++;
-
-                    //}
-
-
-                    /*
-                     * [D'Hondt Method]
-                     * V = is total number of votes that party received
-                     * S = is the number of seats that party has been allocated so far, initially 0 for all parties
-                     * 
-                     * The total voates for each party is divided, first by 1, and upto the total amount of seats that can be allocated -
-                     * per party, which is 5. This gives us the quotient.
-                     * At each round, the party whith highest quotient wins 1 seat.
-                     * quotient = V / (S + 1)
-                   */
-
-        
-                }
-
-                
-           // }
+        public Calculator(string electionName, List<Party> parties, int seatsToBeAllocated)
+        {
+            ElectionName = electionName;
+            
         }
 
         public void Calculate(List<Party> parties, int seatsToBeAllocated, string electionName)
