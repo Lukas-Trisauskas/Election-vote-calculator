@@ -11,7 +11,6 @@ namespace Voting_Calculator
         private int _totalVotes;
         private List<String> _mepsAvailable = new List<String>();
         private List<String> _mepsEarned = new List<String>();
-        private int _mepsTotal = 0;
 
         // Property methods
         public string Name 
@@ -33,11 +32,6 @@ namespace Voting_Calculator
         {
             get { return _mepsEarned; }
             private set { _mepsEarned = value; }
-        }
-        public int  MEPsTotal
-        {
-            get { return _mepsTotal; }
-            private set { _mepsTotal = value; }
         }
         // Constructor
         public Party(string data)
