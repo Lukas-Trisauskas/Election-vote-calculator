@@ -24,7 +24,7 @@ namespace Voting_Calculator
               * Creates a new instance of a class, which takse 1 arg
               * partyList is sent to the main class method [Calculator()]
              */
-            Calculator newElection = new Calculator(parties);
+            Calculator newElection = new Calculator(electionName, parties, seatsToBeAllocated);
 
             newElection.Calculate(parties, seatsToBeAllocated, electionName);
 
