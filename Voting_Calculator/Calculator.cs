@@ -56,10 +56,9 @@ namespace Voting_Calculator
             {
                 highestVote = votes.Max();
                 int highestVoteIndex = votes.IndexOf(highestVote);
-
                 if (round > 1)
                 {
-                    votes[highestVoteIndex] /= (Parties[highestVoteIndex].MEPsEarned.Count + 1);
+                    votes[highestVoteIndex] /= (Parties[highestVoteIndex].MEPsEarned.Count + 2);
                 }
                 //votes.Clear();
                 Parties[highestVoteIndex].AppointMep();
