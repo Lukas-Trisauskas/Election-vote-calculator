@@ -41,29 +41,31 @@ namespace Voting_Calculator
             Parties = partyList;
             SeatsToAllocate = seatsToAllocate;
         }
-        // Class method
+        // Class method; that implements the D'Hondt method to simulate an electoral system
         public void Calculate()
         {
-
-            
-            List<int> votes = new List<int>();
+            List<int> quotientList = new List<int>();
             foreach (Party party in Parties)
             {
-                votes.Add(party.TotalVotes);
+                quotientList.Add(party.TotalVotes);
             }
-            
             for (int round = 0; round < SeatsToAllocate; round++)
             {
-                int highestVote = votes.Max();
-                int highestVoteIndex = votes.IndexOf(highestVote);
+                int highestQuotient = quotientList.Max();
+                int highestQuotientIndex = quotientList.IndexOf(highestQuotient);
               
-                Parties[highestVoteIndex].AppointMep();
-                votes[highestVoteIndex] = Parties[highestVoteIndex].TotalVotes / (Parties[highestVoteIndex].MEPsEarned.Count + 1);
+                // D'Hondt method
+                // First we find the party with the highest votes and appoint it a seat / MEP
+                // Total votes are divided by the number of seats/MEPs the party has + 1
+                // Then we find the next party with the highest votes, until no more seats/MEPs can be appointed.
+
+                Parties[highestQuotientIndex].AppointMep();
+                quotientList[highestQuotientIndex] = Parties[highestQuotientIndex].TotalVotes / (Parties[highestQuotientIndex].MEPsEarned.Count + 1);
                 
-                //Console.WriteLine($"Round: {round}  Highest party: {Parties[highestVoteIndex].Name}  Total votes: {Parties[highestVoteIndex].TotalVotes}  Seats earned: {Parties[highestVoteIndex].MEPsEarned.Count}");
             }
 
             AddResult(ElectionName);
+            // Prints parties that only have acquired 1 or more seat/MEP
             foreach (Party party in Parties)
             {
                 if (party.MEPsEarned.Count > 0) 
