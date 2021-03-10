@@ -51,17 +51,16 @@ namespace Voting_Calculator
             {
                 votes.Add(party.TotalVotes);
             }
-            int highestVote = 0;
-            for (int round = 1; round < SeatsToAllocate; round++)
+            
+            for (int round = 0; round < SeatsToAllocate; round++)
             {
-                highestVote = votes.Max();
+                int highestVote = votes.Max();
                 int highestVoteIndex = votes.IndexOf(highestVote);
-                if (round > 1)
-                {
-                    votes[highestVoteIndex] /= (Parties[highestVoteIndex].MEPsEarned.Count + 2);
-                }
-                //votes.Clear();
+              
                 Parties[highestVoteIndex].AppointMep();
+                votes[highestVoteIndex] = Parties[highestVoteIndex].TotalVotes / (Parties[highestVoteIndex].MEPsEarned.Count + 1);
+                
+                //Console.WriteLine($"Round: {round}  Highest party: {Parties[highestVoteIndex].Name}  Total votes: {Parties[highestVoteIndex].TotalVotes}  Seats earned: {Parties[highestVoteIndex].MEPsEarned.Count}");
             }
 
             AddResult(ElectionName);
