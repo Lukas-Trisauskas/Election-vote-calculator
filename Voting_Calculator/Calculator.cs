@@ -7,86 +7,74 @@ namespace Voting_Calculator
 {
     class Calculator
     {
-        // Fields
+        // Properties
         private List<Party> _parties = new List<Party>();
         private string _results;
         private string _electionName;
-        private int _seatsToBeAllocated;
+        private int _seatsToAllocate;
 
-        // Properties
+        // Property methods
         public string Results
         {
-            get
-            {
-                return _results ?? "Results have not been caculated, use Caculate() method first!";
-            }
-
+            get { return _results ?? "Results have not been caculated, use Caculate() method first!"; }
             private set { _results = value; }
         }
-
         public string ElectionName
         {
             get { return _electionName; }
             private set { _electionName = value; }
         }
-
-        private int SeatsToBeAllocated
+        private int SeatsToAllocate
         {
-            get { return _seatsToBeAllocated; }
-            set { _seatsToBeAllocated = value; }
+            get { return _seatsToAllocate; }
+            set { _seatsToAllocate = value; }
         }
-
         private List<Party> Parties
         {
             get { return _parties; }
             set { _parties = value; }
         }
-
-
-        public Calculator(string electionName, List<Party> parties, int seatsToBeAllocated)
+        // Constructor
+        public Calculator(string electionName, List<Party> partyList, int seatsToAllocate)
         {
             ElectionName = electionName;
-            Parties = parties;
-            SeatsToBeAllocated = seatsToBeAllocated;
+            Parties = partyList;
+            SeatsToAllocate = seatsToAllocate;
         }
-
+        // Class method
         public void Calculate()
         {
-            List<int> votes = new List<int>();
-            List<int> roundsWon = new List<int>();
 
+            
+            List<int> votes = new List<int>();
             foreach (Party party in Parties)
             {
                 votes.Add(party.TotalVotes);
-                roundsWon.Add(0);
             }
-
-            for (int round = 1; round < SeatsToBeAllocated + 1; round++)
+            int highestVote = 0;
+            for (int round = 1; round < SeatsToAllocate; round++)
             {
-
-                int highestVoteCount = votes.Max();
-                
-                int highestVoteIndex = votes.IndexOf(highestVoteCount);
+                highestVote = votes.Max();
+                int highestVoteIndex = votes.IndexOf(highestVote);
 
                 if (round > 1)
                 {
-                    votes[highestVoteIndex] /= 2;
+                    votes[highestVoteIndex] /= (Parties[highestVoteIndex].MEPsEarned.Count + 1);
                 }
-
+                //votes.Clear();
                 Parties[highestVoteIndex].AppointMep();
             }
 
             AddResult(ElectionName);
-
             foreach (Party party in Parties)
             {
-                if (party.MepsGained.Count > 0) 
+                if (party.MEPsEarned.Count > 0) 
                 {
-                    AddResult($"{party.Name},{String.Join(",", party.MepsGained)};");
+                    AddResult($"{party.Name},{String.Join(",", party.MEPsEarned)};");
                 }
             }
         }
-
+        // Class method; combines the final result into a single string which is then called inside main
         private void AddResult(string line)
         {
             Results = _results + line + "\n";
