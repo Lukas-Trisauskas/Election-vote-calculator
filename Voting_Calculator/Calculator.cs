@@ -90,7 +90,10 @@ namespace Voting_Calculator
                 
                 int highestVoteIndex = votes.IndexOf(highestVoteCount);
 
-                votes[highestVoteIndex] /= round;
+                if (round > 1)
+                {
+                    votes[highestVoteIndex] /= 2;
+                }
 
                 parties[highestVoteIndex].AppointMep();
             }
