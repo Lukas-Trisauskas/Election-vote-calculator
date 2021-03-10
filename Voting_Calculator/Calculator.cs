@@ -9,14 +9,23 @@ namespace Voting_Calculator
     {
         // Fields
         private List<Party> _parties = new List<Party>();
-        private string _results = "Results have not been caculated, use Caculate() method first!";
+        private string _results;
         private string _electionName;
         private int _seatsToBeAllocated;
 
         // Properties
         public string Results
         {
-            get { return _results; }
+            get
+            {
+                if (_results == null)
+                {
+                    return "Results have not been caculated, use Caculate() method first!";
+                }
+
+                return _results;
+            }
+
             private set { _results = value; }
         }
 
@@ -42,15 +51,16 @@ namespace Voting_Calculator
         public Calculator(string electionName, List<Party> parties, int seatsToBeAllocated)
         {
             ElectionName = electionName;
-            
+            Parties = parties;
+            SeatsToBeAllocated = seatsToBeAllocated;
         }
 
-        public void Calculate(List<Party> parties, int seatsToBeAllocated, string electionName)
+        public void Calculate()
         {
             List<int> votes = new List<int>();
             List<int> roundsWon = new List<int>();
 
-            foreach (Party party in parties)
+            foreach (Party party in Parties)
             {
                 votes.Add(party.TotalVotes);
                 roundsWon.Add(0);
@@ -59,8 +69,7 @@ namespace Voting_Calculator
 
             int highestVoteCount = 0;
 
-
-            for (int round = 1; round < seatsToBeAllocated + 1; round++)
+            for (int round = 1; round < SeatsToBeAllocated + 1; round++)
             {
 
                 highestVoteCount = votes.Max();
@@ -72,14 +81,12 @@ namespace Voting_Calculator
                     votes[highestVoteIndex] /= 2;
                 }
 
-                parties[highestVoteIndex].AppointMep();
+                Parties[highestVoteIndex].AppointMep();
             }
 
+            AddResult(ElectionName);
 
-            _results = "";
-            AddResult(electionName);
-
-            foreach (Party party in parties)
+            foreach (Party party in Parties)
             {
                 if (party.MepsGained.Count > 0) 
                 {
@@ -90,7 +97,7 @@ namespace Voting_Calculator
 
         private void AddResult(string line)
         {
-            _results = _results + "\n" + line;
+            _results = _results + line + "\n";
         }
     }
 }
