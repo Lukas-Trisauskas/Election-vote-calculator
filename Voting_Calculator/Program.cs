@@ -23,6 +23,7 @@ namespace Voting_Calculator
           
             seatsToBeAllocated = Int32.Parse(data.Lines[1]);
             electionName = data.Lines[0];
+            //test coment to see is i can use the repistory - Barney
             
            
             /*
