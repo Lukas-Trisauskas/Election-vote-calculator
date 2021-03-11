@@ -44,8 +44,6 @@ namespace Voting_Calculator
 
             Calculator newElection = new Calculator(electionName, partyList, seatsToAllocate);
 
-
-            newElection.Calculate();
             Console.WriteLine(newElection.Results);
         }
 

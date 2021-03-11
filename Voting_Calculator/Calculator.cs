@@ -40,9 +40,11 @@ namespace Voting_Calculator
             ElectionName = electionName;
             Parties = partyList;
             SeatsToAllocate = seatsToAllocate;
+
+            Calculate();
         }
         // Class method; that implements the D'Hondt method to simulate an electoral system
-        public void Calculate()
+        private void Calculate()
         {
             List<int> quotientList = new List<int>();
             foreach (Party party in Parties)
