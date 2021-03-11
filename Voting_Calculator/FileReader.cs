@@ -5,25 +5,25 @@ using System.Text;
 
 namespace Voting_Calculator
 {
-    class FileReader
+    static class FileReader
     {
         // Properties
-        private string _raw;
-        private String[] _lines;
+        private static string _raw;
+        private static String[] _lines;
 
         // Property methods
-        public string Raw
+        private static string Raw
         {
             get { return _raw ?? "Have not read file yet"; }
-            private set { _raw = value; }
+            set { _raw = value; }
         }
-        public String[] Lines
+        private static String[] Lines
         {
             get { return _lines ?? new string[] { "Have not read file yet" }; }
-            private set { _lines = value; }
+            set { _lines = value; }
         }
         // Constructor 
-        public FileReader(string directory, string fileName)
+        public static String[] GetLines(string directory, string fileName)
         {
 
             /*
@@ -39,8 +39,7 @@ namespace Voting_Calculator
             Raw = File.ReadAllText(filePath);
 
             // Seperates each line as individual string
-            Lines = Raw.Split(Char.Parse("\n"));
-
+            return Raw.Split(Char.Parse("\n"));
         }
     }
 }

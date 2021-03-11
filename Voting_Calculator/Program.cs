@@ -20,20 +20,18 @@ namespace Voting_Calculator
             string path = Path.Combine(currentDirectory, @"..\..\..\..\");
             string fileName = "Assessment1Data.txt";
 
-
-            FileReader data = new FileReader(path, fileName);
-
+            String[] data = FileReader.GetLines(path, fileName);
 
             // Calls the function and stores contents of the file inside a new variable
-            List<Party> partyList = ExtractPartyList(data.Lines);
+            List<Party> partyList = ExtractPartyList(data);
             string electionName;
             int seatsToAllocate;
 
             // Retrieves the contents of the second line, which is the maximum amount of MEPs that can be appointed
-            seatsToAllocate = Int32.Parse(data.Lines[1]);
+            seatsToAllocate = Int32.Parse(data[1]);
 
             // Retrievs the concents of the first line, which is the election name.
-            electionName = data.Lines[0];
+            electionName = data[0];
 
 
 
